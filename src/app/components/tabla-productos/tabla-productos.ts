@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Producto } from '../../models/producto';
 
@@ -10,11 +10,9 @@ import { Producto } from '../../models/producto';
   styleUrls: ['./tabla-productos.css']
 })
 export class TablaProductosComponent {
-  @Input({ required: true }) productos!: Producto[];
-  @Output() editar = new EventEmitter<Producto>();
-  @Output() eliminar = new EventEmitter<Producto>();
+  productos = input.required<Producto[]>();
+  rol = input.required<'admin' | 'customer'>();
 
-  trackByProductoId(index: number, producto: Producto): number {
-    return producto.id;
-  }
+  editar = output<Producto>();
+  eliminar = output<Producto>();
 }

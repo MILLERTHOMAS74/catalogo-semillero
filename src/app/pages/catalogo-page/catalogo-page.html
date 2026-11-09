@@ -1,53 +1,50 @@
-<div class="container">
-  <header>
-    <h1>Catálogo de Productos</h1>
-    <div class="actions">
-      <button class="btn-rol" (click)="alternarRol()">
-        Cambiar a Vista: {{ rolActual() === 'customer' ? 'Administrador' : 'Cliente' }}
+<div class="container my-4">
+  <header class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Catálogo de Productos - Semillero</h1>
+    <div>
+      <button class="btn btn-outline-secondary me-3" (click)="alternarRol()">
+        Cambiar Rol (Actual: <strong>{{ rolActual() }}</strong>)
       </button>
-      <div class="carrito-info" *ngIf="rolActual() === 'customer'">
-        🛒 Carrito: <strong>{{ cantidadItemsCarrito() }}</strong> | Total: <strong>${{ totalCarrito() }}</strong>
-      </div>
+      <span class="badge bg-success fs-6">🛒 Carrito: {{ cantidadItemsCarrito() }} items (${{ totalCarrito() }})</span>
     </div>
   </header>
 
-  <!-- Filtros por categoría -->
-  <div class="filtros">
-    <span>Filtrar: </span>
-    <button 
-      *ngFor="let cat of categoriasDisponibles()" 
-      [class.active]="categoriaSeleccionada() === cat"
-      (click)="cambiarCategoria(cat)">
-      {{ cat }}
-    </button>
+  <!-- Filtros -->
+  <div class="mb-4">
+    <span class="me-2 fw-bold">Categorías:</span>
+    @for (cat of categoriasDisponibles(); track cat) {
+      <button 
+        class="btn btn-sm me-2" 
+        [class.btn-dark]="categoriaSeleccionada() === cat"
+        [class.btn-outline-dark]="categoriaSeleccionada() !== cat"
+        (click)="cambiarCategoria(cat)">
+        {{ cat }}
+      </button>
+    }
   </div>
 
-  <!-- Vistas por Rol con *ngSwitch -->
-  <main [ngSwitch]="rolActual()">
-    <div *ngSwitchCase="'admin'">
-      <h2>Panel de Administración</h2>
-      <app-tabla-productos 
-        [productos]="productosFiltrados()"
-        (editar)="editarProducto($event)"
-        (eliminar)="eliminarProducto($event)">
-      </app-tabla-productos>
-    </div>
-
-    <div *ngSwitchCase="'customer'">
-      <h2>Zona de Clientes</h2>
-      <div class="grid" *ngIf="productosFiltrados().length > 0; else vacio">
-        <app-tarjeta-producto
-          *ngFor="let p of productosFiltrados(); trackBy: trackByProductoId"
-          [producto]="p"
-          (agregarAlCarrito)="agregarAlCarrito($event)">
+  <!-- Vista en Tarjetas -->
+  <h3 class="mb-3">Vista de Tarjetas</h3>
+  <div class="row">
+    @for (prod of productosFiltrados(); track prod.id) {
+      <div class="col-md-4">
+        <app-tarjeta-producto 
+          [producto]="prod" 
+          [rol]="rolActual()"
+          (agregarCarrito)="agregarAlCarrito($event)"
+          (editar)="editarProducto($event)"
+          (eliminar)="eliminarProducto($event)">
         </app-tarjeta-producto>
       </div>
+    }
+  </div>
 
-      <ng-template #vacio>
-        <div class="mensaje-vacio">
-          No hay productos disponibles en la categoría "{{ categoriaSeleccionada() }}".
-        </div>
-      </ng-template>
-    </div>
-  </main>
+  <!-- Vista en Tabla -->
+  <h3 class="mt-5 mb-3">Vista de Tabla</h3>
+  <app-tabla-productos 
+    [productos]="productosFiltrados()" 
+    [rol]="rolActual()"
+    (editar)="editarProducto($event)"
+    (eliminar)="eliminarProducto($event)">
+  </app-tabla-productos>
 </div>

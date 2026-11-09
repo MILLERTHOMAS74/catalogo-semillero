@@ -1,14 +1,24 @@
-<div class="card">
-  <div class="img-container">
-    <img [src]="producto.images[0]" [alt]="producto.title" />
-    <span *ngIf="producto.stock === 0" class="badge">Agotado</span>
-  </div>
-  <div class="content">
-    <span class="categoria">{{ producto.category.name }}</span>
-    <h3>{{ producto.title }}</h3>
-    <p class="precio">${{ producto.price }}</p>
-    <button [disabled]="producto.stock === 0" (click)="onAgregar()">
-      {{ producto.stock === 0 ? 'Sin Stock' : 'Agregar al carrito' }}
-    </button>
+<div class="card p-3 shadow-sm mb-3">
+  <img [src]="producto().images[0]" class="card-img-top" [alt]="producto().title" style="height: 150px; object-fit: cover;">
+  <div class="card-body">
+    <h5 class="card-title">{{ producto().title }}</h5>
+    <p class="card-text text-muted">{{ producto().category.name }}</p>
+    <p class="card-text fw-bold">${{ producto().price }}</p>
+    <p class="card-text">Stock: {{ producto().stock }}</p>
+
+    <!-- Vista de Cliente -->
+    @if (rol() === 'customer') {
+      <button class="btn btn-primary w-100" [disabled]="producto().stock === 0" (click)="onAgregar()">
+        {{ producto().stock > 0 ? 'Agregar al Carrito' : 'Agotado' }}
+      </button>
+    }
+
+    <!-- Vista de Administrador -->
+    @if (rol() === 'admin') {
+      <div class="d-flex gap-2">
+        <button class="btn btn-warning btn-sm w-50" (click)="onEditar()">Editar</button>
+        <button class="btn btn-danger btn-sm w-50" (click)="onEliminar()">Eliminar</button>
+      </div>
+    }
   </div>
 </div>

@@ -1,33 +1,35 @@
-<div class="table-container">
-  <table *ngIf="productos.length > 0; else sinDatos">
+<div class="table-responsive">
+  <table class="table table-striped align-middle">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Miniatura</th>
+        <th>Imagen</th>
         <th>Título</th>
         <th>Categoría</th>
         <th>Precio</th>
         <th>Stock</th>
-        <th>Acciones</th>
+        @if (rol() === 'admin') {
+          <th>Acciones</th>
+        }
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of productos; trackBy: trackByProductoId">
-        <td>{{ p.id }}</td>
-        <td><img [src]="p.images[0]" class="mini" /></td>
-        <td>{{ p.title }}</td>
-        <td>{{ p.category.name }}</td>
-        <td>${{ p.price }}</td>
-        <td>{{ p.stock }}</td>
-        <td>
-          <button class="btn-edit" (click)="editar.emit(p)">Editar</button>
-          <button class="btn-del" (click)="eliminar.emit(p)">Eliminar</button>
-        </td>
-      </tr>
+      @for (p of productos(); track p.id) {
+        <tr>
+          <td>{{ p.id }}</td>
+          <td><img [src]="p.images[0]" width="50" height="50" style="object-fit: cover;" class="rounded"></td>
+          <td>{{ p.title }}</td>
+          <td>{{ p.category.name }}</td>
+          <td>${{ p.price }}</td>
+          <td>{{ p.stock }}</td>
+          @if (rol() === 'admin') {
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editar.emit(p)">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminar.emit(p)">Eliminar</button>
+            </td>
+          }
+        </tr>
+      }
     </tbody>
   </table>
-
-  <ng-template #sinDatos>
-    <div class="vacio">No hay productos para mostrar en este momento.</div>
-  </ng-template>
 </div>

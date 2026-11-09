@@ -5,8 +5,8 @@ import { CatalogoPage } from './pages/catalogo-page/catalogo-page';
   selector: 'app-root',
   standalone: true,
   imports: [CatalogoPage],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: `<app-catalogo-page></app-catalogo-page>`, // <-- Inyectamos la etiqueta aquí
+  styles: []
 })
 export class AppComponent {
   title = 'catalogo-semillero';
