@@ -1,19 +1,18 @@
-# 🛒 Catálogo de Productos - Taller Angular (Standalone & Signals)
+# Taller 01 — Catálogo de Productos (Semillero)
 
-Proyecto desarrollado en **Angular** (versión moderna con componentes Standalone y Signals) que implementa un catálogo de productos con gestión de roles, filtrado por categorías y carrito de compras, siguiendo una arquitectura Smart/Dumb (Contenedor/Presentacional).
+Aplicación web desarrollada en **Angular (Standalone Architecture)** utilizando **Signals** y propiedades computadas (`computed`), implementando gestión de estado local, filtrado de categorías dinámicas, manejo de carrito y vistas basadas en roles (administrador y cliente).
 
 ---
 
-## 🚀 Requisitos previos
+## 🚀 Requisitos Previos
 Asegúrate de tener instalado en tu equipo:
-* [Node.js](https://nodejs.org/) (versión 18 o superior recomendada).
-* Angular CLI.
+- [Node.js](https://nodejs.org/) (Versión LTS recomendada)
+- Angular CLI (`npm install -g @angular/cli`)
 
 ---
 
 ## 📦 Instrucciones para clonar y levantar el proyecto
 
-1. **Clona este repositorio:**
+1. **Clonar el repositorio:**
    ```bash
-   git clone <URL_DE_TU_REPOSITORIO>
-   cd catalogo-semillero
+   git clone https://github.com/MILLERTHOMAS74/catalogo-semillero.git
